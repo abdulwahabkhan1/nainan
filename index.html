@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON ORLOV — Eyewear & Horology Atelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ==================== TOKENS ==================== */
+  :root {
+    --ink:        #2a2520;
+    --paper:      #faf6ee;
+    --cream:      #f4ede0;
+    --bone:       #e8e0d1;
+    --gilt:       #b8924f;
+    --gilt-deep:  #8c7341;
+    --rouge:      #8b3a2f;
+    --muted:      #7a7368;
+    --line:       rgba(42, 37, 32, 0.12);
+    --line-soft:  rgba(42, 37, 32, 0.08);
+
+    --serif:   "Roboto", -apple-system, sans-serif;
+    --display: "Roboto", -apple-system, sans-serif;
+    --sans:    "Roboto", -apple-system, sans-serif;
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ==================== RESET ==================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ==================== GRAIN OVERLAY ==================== */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ==================== NAVIGATION ==================== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 28px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s var(--ease);
+    color: var(--ink);
+  }
+  .nav.scrolled {
+    padding: 18px 56px;
+    background: rgba(250, 246, 238, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.25em;
+  }
+  .brand .est { font-family: var(--sans); font-size: 9px; letter-spacing: 0.3em; opacity: 0.6; display: block; margin-top: 2px; }
+  .nav-links {
+    display: flex;
+    gap: 44px;
+    list-style: none;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .nav-links a { position: relative; transition: opacity 0.3s; }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -6px; left: 0;
+    width: 0; height: 1px;
+    background: currentColor;
+    transition: width 0.4s var(--ease);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cart {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-cart span {
+    width: 18px; height: 18px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 9px;
+  }
+
+  /* ==================== HERO ==================== */
+  .hero {
+    height: 100vh;
+    min-height: 720px;
+    position: relative;
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 56px;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(184, 146, 79, 0.15), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(139, 58, 47, 0.10), transparent 55%);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-meta {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gilt);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease) 0.2s forwards;
+  }
+  .hero-meta::before {
+    content: "";
+    width: 40px; height: 1px;
+    background: var(--gilt);
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(56px, 8vw, 132px);
+    line-height: 0.95;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    margin-bottom: 36px;
+  }
+  .hero h1 .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 1.2s var(--ease) forwards;
+  }
+  .hero h1 .line:nth-child(1) { animation-delay: 0.4s; }
+  .hero h1 .line:nth-child(2) { animation-delay: 0.55s; font-style: italic; color: var(--gilt-deep); padding-left: 80px; }
+  .hero h1 .line:nth-child(3) { animation-delay: 0.7s; }
+  .hero p.lede {
+    font-size: 17px;
+    max-width: 440px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    line-height: 1.65;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease) 0.9s forwards;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease) 1.1s forwards;
+  }
+  .btn {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 18px 36px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    transform: translateY(101%);
+    transition: transform 0.5s var(--ease);
+    z-index: -1;
+  }
+  .btn:hover { color: var(--paper); }
+  .btn:hover::before { transform: translateY(0); }
+  .btn-text {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-text:hover { color: var(--gilt-deep); border-color: var(--gilt-deep); }
+
+  /* Hero visual side */
+  .hero-visual {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .hero-frame {
+    position: relative;
+    width: 380px;
+    height: 520px;
+    opacity: 0;
+    animation: fadeIn 1.5s var(--ease) 0.6s forwards;
+  }
+  .hero-frame::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    border: 1px solid var(--gilt-deep);
+    transform: rotate(-3deg);
+    opacity: 0.35;
+  }
+  .hero-frame svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 20px 40px rgba(42, 37, 32, 0.2));
+  }
+  .hero-numbers {
+    position: absolute;
+    bottom: 56px;
+    left: 56px;
+    display: flex;
+    gap: 56px;
+    z-index: 3;
+    opacity: 0;
+    animation: fadeUp 1s var(--ease) 1.3s forwards;
+  }
+  .stat .num {
+    font-family: var(--display);
+    font-size: 42px;
+    color: var(--gilt-deep);
+    line-height: 1;
+  }
+  .stat .lbl {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    right: 56px;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    z-index: 3;
+  }
+
+  /* ==================== MARQUEE ==================== */
+  .marquee {
+    background: var(--cream);
+    color: var(--ink);
+    padding: 22px 0;
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 80px;
+    white-space: nowrap;
+    animation: scroll 40s linear infinite;
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 0.05em;
+  }
+  .marquee-track span { display: inline-flex; align-items: center; gap: 80px; }
+  .marquee-track .dot { color: var(--gilt-deep); }
+
+  /* ==================== SECTION HEAD ==================== */
+  section { padding: 140px 56px; position: relative; }
+  .section-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 80px;
+    margin-bottom: 100px;
+    align-items: end;
+  }
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gilt-deep);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 30px; height: 1px;
+    background: var(--gilt-deep);
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(42px, 6vw, 84px);
+    line-height: 1;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .section-title em {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gilt-deep);
+    font-weight: 400;
+  }
+
+  /* ==================== COLLECTIONS ==================== */
+  .collections {
+    background: var(--paper);
+  }
+  .collection-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 56px;
+    margin-bottom: 80px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+  }
+  .tab {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .tab.active { color: var(--ink); }
+  .tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -25px; left: 0; right: 0;
+    height: 2px;
+    background: var(--gilt);
+  }
+  .tab:hover { color: var(--ink); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 56px 40px;
+  }
+  .product {
+    cursor: pointer;
+    position: relative;
+  }
+  .product-frame {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(160deg, #f4ede0 0%, #e0d5be 100%);
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.6s var(--ease);
+  }
+  .product-frame::before {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(42, 37, 32, 0.08);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .product-frame svg {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 70%;
+    height: 70%;
+    transition: transform 0.7s var(--ease);
+  }
+  .product:hover .product-frame svg { transform: scale(1.06); }
+  .product:hover .product-frame { transform: translateY(-6px); box-shadow: 0 30px 60px -20px rgba(11,10,8,0.25); }
+  .product-tag {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--ink);
+    color: var(--gilt);
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    z-index: 3;
+  }
+  .product-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .product-name {
+    font-family: var(--display);
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .product-cat {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .product-price {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--gilt-deep);
+    white-space: nowrap;
+  }
+
+  /* ==================== FEATURE / CRAFTSMANSHIP ==================== */
+  .craft {
+    background: var(--cream);
+    color: var(--ink);
+    overflow: hidden;
+  }
+  .craft .eyebrow { color: var(--gilt-deep); }
+  .craft .eyebrow::before { background: var(--gilt-deep); }
+  .craft .section-title em { color: var(--gilt-deep); }
+  .craft-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .craft-visual {
+    position: relative;
+    aspect-ratio: 4 / 5;
+  }
+  .craft-visual .ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--gilt);
+    border-radius: 50%;
+    animation: rotate 40s linear infinite;
+    opacity: 0.6;
+  }
+  .craft-visual .ring.inner {
+    inset: 60px;
+    border-style: dashed;
+    animation: rotate 30s linear infinite reverse;
+    opacity: 0.4;
+  }
+  .craft-visual svg {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 75%;
+    height: 75%;
+  }
+  .craft-text p {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+    max-width: 540px;
+  }
+  .craft-features {
+    list-style: none;
+    margin-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+  .craft-features li {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: center;
+    gap: 24px;
+  }
+  .craft-features .ix {
+    font-family: var(--display);
+    font-size: 28px;
+    color: var(--gilt-deep);
+  }
+  .craft-features .ft {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .craft-features .ds {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ==================== EDITORIAL / STORY ==================== */
+  .editorial { background: var(--paper); }
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .editorial-img {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, var(--bone), #c5b89e);
+    position: relative;
+    overflow: hidden;
+  }
+  .editorial-img::before {
+    content: "EST. 1923";
+    position: absolute;
+    top: 24px; left: 24px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: rgba(11,10,8,0.4);
+  }
+  .editorial-img svg {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 60%;
+    height: 60%;
+  }
+  .editorial-text .quote {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.5vw, 46px);
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    margin-bottom: 36px;
+  }
+  .editorial-text .quote::before {
+    content: "“";
+    font-size: 1.5em;
+    color: var(--gilt);
+    line-height: 0;
+    vertical-align: -0.3em;
+    margin-right: 8px;
+  }
+  .editorial-text .attribution {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  .editorial-text p {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  /* ==================== ATELIER / CONTACT ==================== */
+  .atelier {
+    background: var(--bone);
+    text-align: center;
+  }
+  .atelier .section-title { margin: 0 auto 60px; max-width: 900px; }
+  .atelier-form {
+    max-width: 540px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .input-group {
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    transition: border-color 0.3s;
+  }
+  .input-group:focus-within { border-color: var(--gilt); }
+  .input-group label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .input-group input,
+  .input-group textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ink);
+    padding: 4px 0;
+    outline: none;
+    resize: none;
+  }
+  .atelier .btn {
+    margin-top: 20px;
+    align-self: flex-start;
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .atelier .btn::before { background: var(--ink); }
+  .atelier .btn:hover { color: var(--bone); }
+
+  .locations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 120px;
+    padding-top: 60px;
+    border-top: 1px solid var(--line);
+    text-align: left;
+  }
+  .location h4 {
+    font-family: var(--display);
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .location p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .location .hrs {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gilt-deep);
+    margin-top: 16px;
+  }
+
+  /* ==================== FOOTER ==================== */
+  footer {
+    background: var(--bone);
+    color: var(--ink);
+    padding: 80px 56px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-brand .brand { font-size: 32px; margin-bottom: 24px; }
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 320px;
+    font-weight: 300;
+  }
+  .footer-col h5 {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gilt-deep);
+    margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--ink); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  /* ==================== ANIMATIONS ==================== */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes scroll {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes rotate {
+    to { transform: rotate(360deg); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 900px) {
+    .nav { padding: 20px 24px; }
+    .nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .hero-numbers { left: 24px; bottom: 30px; gap: 32px; }
+    .scroll-indicator { display: none; }
+    .section-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 60px; }
+    .product-grid { grid-template-columns: 1fr; gap: 40px; }
+    .collection-tabs { gap: 24px; flex-wrap: wrap; justify-content: flex-start; }
+    .craft-grid, .editorial-grid { grid-template-columns: 1fr; gap: 60px; }
+    .locations { grid-template-columns: 1fr; margin-top: 60px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    footer { padding: 60px 24px 30px; }
+    .marquee-track { font-size: 20px; gap: 50px; }
+    .hero h1 .line:nth-child(2) { padding-left: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav class="nav" id="nav">
+  <div class="brand">
+    MAISON ORLOV
+    <span class="est">EST. MCMXXIII</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#craft">Atelier</a></li>
+    <li><a href="#story">Heritage</a></li>
+    <li><a href="#contact">Boutiques</a></li>
+  </ul>
+  <a href="#" class="nav-cart">Bag <span>0</span></a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-meta">A century of precision · Geneva · Paris · Milan</div>
+      <h1>
+        <span class="line">Time</span>
+        <span class="line">refined,</span>
+        <span class="line">vision realised.</span>
+      </h1>
+      <p class="lede">Hand-finished timepieces and bespoke eyewear, crafted in our European ateliers by master horologists and opticians of the third generation.</p>
+      <div class="hero-cta">
+        <a href="#collections" class="btn">Discover Collections</a>
+        <a href="#story" class="btn-text">Our Heritage →</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-frame">
+        <!-- Composite hero: watch + spectacles, stacked -->
+        <svg viewBox="0 0 380 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="watchFace" cx="0.5" cy="0.45" r="0.6">
+              <stop offset="0%" stop-color="#faf6ee"/>
+              <stop offset="100%" stop-color="#e8dcc4"/>
+            </radialGradient>
+            <linearGradient id="goldR" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#e6c889"/>
+              <stop offset="50%" stop-color="#c9a96b"/>
+              <stop offset="100%" stop-color="#8c7341"/>
+            </linearGradient>
+            <linearGradient id="glassLens" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#d4cdb8" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#a8a08a" stop-opacity="0.6"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Wristwatch (top) -->
+          <g transform="translate(190, 180)">
+            <defs>
+              <linearGradient id="strapTop" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#3a2a1c"/>
+                <stop offset="50%" stop-color="#5a4128"/>
+                <stop offset="100%" stop-color="#3a2a1c"/>
+              </linearGradient>
+              <linearGradient id="strapBot" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#3a2a1c"/>
+                <stop offset="50%" stop-color="#5a4128"/>
+                <stop offset="100%" stop-color="#2a1d12"/>
+              </linearGradient>
+            </defs>
+            <!-- TOP STRAP with lugs -->
+            <!-- lugs (top) -->
+            <rect x="-78" y="-110" width="22" height="22" rx="3" fill="url(#goldR)"/>
+            <rect x="56" y="-110" width="22" height="22" rx="3" fill="url(#goldR)"/>
+            <!-- strap leather -->
+            <path d="M -62 -100 L -66 -175 L 66 -175 L 62 -100 Z" fill="url(#strapTop)"/>
+            <!-- strap stitching -->
+            <path d="M -58 -105 L -62 -170" stroke="#c9a96b" stroke-width="0.5" stroke-dasharray="3,2" opacity="0.6" fill="none"/>
+            <path d="M 58 -105 L 62 -170" stroke="#c9a96b" stroke-width="0.5" stroke-dasharray="3,2" opacity="0.6" fill="none"/>
+            <!-- strap holes -->
+            <circle cx="0" cy="-150" r="2" fill="#0b0a08"/>
+            <circle cx="0" cy="-135" r="2" fill="#0b0a08"/>
+            <circle cx="0" cy="-165" r="2" fill="#0b0a08"/>
+
+            <!-- BOTTOM STRAP with lugs -->
+            <rect x="-78" y="88" width="22" height="22" rx="3" fill="url(#goldR)"/>
+            <rect x="56" y="88" width="22" height="22" rx="3" fill="url(#goldR)"/>
+            <path d="M -62 100 L -68 200 L 68 200 L 62 100 Z" fill="url(#strapBot)"/>
+            <path d="M -58 105 L -64 195" stroke="#c9a96b" stroke-width="0.5" stroke-dasharray="3,2" opacity="0.6" fill="none"/>
+            <path d="M 58 105 L 64 195" stroke="#c9a96b" stroke-width="0.5" stroke-dasharray="3,2" opacity="0.6" fill="none"/>
+            <!-- buckle -->
+            <rect x="-30" y="190" width="60" height="22" rx="2" fill="url(#goldR)"/>
+            <rect x="-26" y="194" width="52" height="14" rx="1" fill="#0b0a08" opacity="0.3"/>
+            <line x1="0" y1="190" x2="0" y2="212" stroke="#8c7341" stroke-width="1.5"/>
+
+            <!-- WATCH CASE -->
+            <circle r="100" fill="url(#goldR)"/>
+            <circle r="92" fill="#3a3530"/>
+            <!-- Bezel ticks -->
+            <g stroke="url(#goldR)" stroke-width="1.5">
+              <line x1="0" y1="-92" x2="0" y2="-84"/>
+              <line x1="0" y1="92" x2="0" y2="84"/>
+              <line x1="-92" y1="0" x2="-84" y2="0"/>
+              <line x1="92" y1="0" x2="84" y2="0"/>
+            </g>
+            <!-- Face -->
+            <circle r="80" fill="url(#watchFace)"/>
+            <circle r="80" fill="none" stroke="#8c7341" stroke-width="0.5" opacity="0.6"/>
+            <!-- Hour markers -->
+            <g fill="#8c7341">
+              <rect x="-1.5" y="-72" width="3" height="10"/>
+              <rect x="-1.5" y="62" width="3" height="10"/>
+              <rect x="-72" y="-1.5" width="10" height="3"/>
+              <rect x="62" y="-1.5" width="10" height="3"/>
+              <circle cx="0" cy="-50" r="2"/>
+              <circle cx="50" cy="0" r="2"/>
+              <circle cx="0" cy="50" r="2"/>
+              <circle cx="-50" cy="0" r="2"/>
+            </g>
+            <!-- Brand text -->
+            <text x="0" y="-28" text-anchor="middle" fill="#8c7341" font-family="Roboto, sans-serif" font-size="11" letter-spacing="2">ORLOV</text>
+            <text x="0" y="38" text-anchor="middle" fill="#8c7341" font-family="Roboto, sans-serif" font-size="6" letter-spacing="2" opacity="0.7">AUTOMATIC</text>
+            <!-- Hands -->
+            <line x1="0" y1="6" x2="0" y2="-54" stroke="#2a2520" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="0" y1="6" x2="38" y2="-28" stroke="#2a2520" stroke-width="2" stroke-linecap="round"/>
+            <line x1="0" y1="-10" x2="0" y2="60" stroke="#8b3a2f" stroke-width="1" stroke-linecap="round"/>
+            <circle r="4" fill="#8c7341"/>
+            <circle r="1.5" fill="#2a2520"/>
+            <!-- Crown -->
+            <rect x="92" y="-7" width="14" height="14" fill="url(#goldR)" rx="1"/>
+            <circle cx="106" cy="0" r="4" fill="url(#goldR)"/>
+          </g>
+
+          <!-- Spectacles (bottom) -->
+          <g transform="translate(190, 400)">
+            <!-- Bridge -->
+            <line x1="-32" y1="0" x2="32" y2="0" stroke="url(#goldR)" stroke-width="3" stroke-linecap="round"/>
+            <!-- Left lens -->
+            <ellipse cx="-72" cy="0" rx="50" ry="42" fill="url(#glassLens)" stroke="url(#goldR)" stroke-width="3"/>
+            <ellipse cx="-72" cy="-8" rx="28" ry="14" fill="#f4efe6" opacity="0.08"/>
+            <!-- Right lens -->
+            <ellipse cx="72" cy="0" rx="50" ry="42" fill="url(#glassLens)" stroke="url(#goldR)" stroke-width="3"/>
+            <ellipse cx="72" cy="-8" rx="28" ry="14" fill="#f4efe6" opacity="0.08"/>
+            <!-- Temples -->
+            <path d="M -122 -2 Q -150 -8, -160 8" stroke="url(#goldR)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M 122 -2 Q 150 -8, 160 8" stroke="url(#goldR)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-numbers">
+    <div class="stat"><div class="num">102</div><div class="lbl">Years of mastery</div></div>
+    <div class="stat"><div class="num">37</div><div class="lbl">Master artisans</div></div>
+    <div class="stat"><div class="num">14</div><div class="lbl">Global boutiques</div></div>
+  </div>
+  <div class="scroll-indicator">scroll ↓</div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Geneva atelier <em class="dot">·</em> Hand-finished movements <em class="dot">·</em> Italian acetate <em class="dot">·</em> Sapphire crystals <em class="dot">·</em> Lifetime guarantee <em class="dot">·</em> Bespoke commissions <em class="dot">·</em></span>
+    <span>Geneva atelier <em class="dot">·</em> Hand-finished movements <em class="dot">·</em> Italian acetate <em class="dot">·</em> Sapphire crystals <em class="dot">·</em> Lifetime guarantee <em class="dot">·</em> Bespoke commissions <em class="dot">·</em></span>
+  </div>
+</div>
+
+<!-- ============ COLLECTIONS ============ -->
+<section class="collections" id="collections">
+  <div class="section-head reveal">
+    <div class="eyebrow">Chapter I</div>
+    <h2 class="section-title">The <em>Collections</em></h2>
+  </div>
+
+  <div class="collection-tabs reveal">
+    <button class="tab active" data-filter="all">All Pieces</button>
+    <button class="tab" data-filter="watch">Horology</button>
+    <button class="tab" data-filter="spec">Eyewear</button>
+    <button class="tab" data-filter="limited">Limited Edition</button>
+  </div>
+
+  <div class="product-grid" id="grid">
+    <!-- Product 1: Wristwatch -->
+    <div class="product reveal" data-cat="watch limited">
+      <div class="product-frame">
+        <span class="product-tag">Limited · 50</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#e6c889"/>
+              <stop offset="100%" stop-color="#8c7341"/>
+            </linearGradient>
+            <linearGradient id="s1" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#3a2a1c"/>
+              <stop offset="100%" stop-color="#5a4128"/>
+            </linearGradient>
+          </defs>
+          <!-- Top strap -->
+          <path d="M 76 30 L 80 70 L 120 70 L 124 30 Z" fill="url(#s1)"/>
+          <line x1="84" y1="38" x2="86" y2="66" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.7"/>
+          <line x1="116" y1="38" x2="114" y2="66" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.7"/>
+          <!-- Bottom strap with buckle -->
+          <path d="M 80 130 L 76 170 L 124 170 L 120 130 Z" fill="url(#s1)"/>
+          <line x1="86" y1="134" x2="84" y2="162" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.7"/>
+          <line x1="114" y1="134" x2="116" y2="162" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.7"/>
+          <rect x="86" y="166" width="28" height="10" rx="1" fill="url(#g1)"/>
+          <!-- Lugs -->
+          <rect x="76" y="64" width="10" height="14" fill="url(#g1)"/>
+          <rect x="114" y="64" width="10" height="14" fill="url(#g1)"/>
+          <rect x="76" y="122" width="10" height="14" fill="url(#g1)"/>
+          <rect x="114" y="122" width="10" height="14" fill="url(#g1)"/>
+          <!-- Case -->
+          <circle cx="100" cy="100" r="38" fill="url(#g1)"/>
+          <circle cx="100" cy="100" r="33" fill="#3a3530"/>
+          <circle cx="100" cy="100" r="28" fill="#f4ede0"/>
+          <g fill="#8c7341">
+            <rect x="98.5" y="74" width="3" height="6"/>
+            <rect x="98.5" y="120" width="3" height="6"/>
+            <rect x="74" y="98.5" width="6" height="3"/>
+            <rect x="120" y="98.5" width="6" height="3"/>
+          </g>
+          <text x="100" y="92" text-anchor="middle" fill="#8c7341" font-family="Roboto" font-size="7" letter-spacing="1.5">ORLOV</text>
+          <line x1="100" y1="100" x2="100" y2="80" stroke="#2a2520" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="100" y1="100" x2="114" y2="90" stroke="#2a2520" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="100" cy="100" r="2" fill="#8c7341"/>
+          <!-- Crown -->
+          <rect x="138" y="97" width="8" height="6" fill="url(#g1)"/>
+          <circle cx="146" cy="100" r="2.5" fill="url(#g1)"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Sovereign Tourbillon</div>
+          <div class="product-cat">Automatic · 18kt Gold</div>
+        </div>
+        <div class="product-price">€48,200</div>
+      </div>
+    </div>
+
+    <!-- Product 2: Spectacles -->
+    <div class="product reveal" data-cat="spec">
+      <div class="product-frame">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#6b5d4a"/>
+              <stop offset="100%" stop-color="#3a3025"/>
+            </linearGradient>
+          </defs>
+          <line x1="80" y1="100" x2="120" y2="100" stroke="url(#g2)" stroke-width="4"/>
+          <rect x="20" y="78" width="62" height="48" rx="4" fill="url(#g2)" stroke="#2a2520"/>
+          <rect x="118" y="78" width="62" height="48" rx="4" fill="url(#g2)" stroke="#2a2520"/>
+          <rect x="26" y="84" width="50" height="36" rx="2" fill="#d4cdb8" opacity="0.6"/>
+          <rect x="124" y="84" width="50" height="36" rx="2" fill="#d4cdb8" opacity="0.6"/>
+          <ellipse cx="42" cy="92" rx="14" ry="6" fill="#faf6ee" opacity="0.5"/>
+          <ellipse cx="140" cy="92" rx="14" ry="6" fill="#faf6ee" opacity="0.5"/>
+          <line x1="20" y1="100" x2="6" y2="94" stroke="url(#g2)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="180" y1="100" x2="194" y2="94" stroke="url(#g2)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Le Théoricien</div>
+          <div class="product-cat">Acetate · Optical</div>
+        </div>
+        <div class="product-price">€680</div>
+      </div>
+    </div>
+
+    <!-- Product 3: Wristwatch -->
+    <div class="product reveal" data-cat="watch">
+      <div class="product-frame">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g3" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#cfd6db"/>
+              <stop offset="100%" stop-color="#7a8590"/>
+            </linearGradient>
+            <linearGradient id="link3" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stop-color="#7a8590"/>
+              <stop offset="50%" stop-color="#cfd6db"/>
+              <stop offset="100%" stop-color="#7a8590"/>
+            </linearGradient>
+          </defs>
+          <!-- Top metal bracelet links -->
+          <g>
+            <rect x="76" y="22" width="48" height="10" rx="2" fill="url(#link3)"/>
+            <rect x="78" y="34" width="44" height="10" rx="2" fill="url(#link3)"/>
+            <rect x="76" y="46" width="48" height="10" rx="2" fill="url(#link3)"/>
+            <rect x="78" y="58" width="44" height="10" rx="2" fill="url(#link3)"/>
+          </g>
+          <!-- Bottom metal bracelet links -->
+          <g>
+            <rect x="78" y="132" width="44" height="10" rx="2" fill="url(#link3)"/>
+            <rect x="76" y="144" width="48" height="10" rx="2" fill="url(#link3)"/>
+            <rect x="78" y="156" width="44" height="10" rx="2" fill="url(#link3)"/>
+            <rect x="76" y="168" width="48" height="10" rx="2" fill="url(#link3)"/>
+          </g>
+          <!-- Case -->
+          <circle cx="100" cy="100" r="38" fill="url(#g3)"/>
+          <circle cx="100" cy="100" r="33" fill="#f4efe6"/>
+          <circle cx="100" cy="100" r="28" fill="none" stroke="#0b0a08" stroke-width="0.3"/>
+          <g fill="#0b0a08" font-family="Roboto" font-size="6">
+            <text x="100" y="80" text-anchor="middle">XII</text>
+            <text x="122" y="103" text-anchor="middle">III</text>
+            <text x="100" y="126" text-anchor="middle">VI</text>
+            <text x="78" y="103" text-anchor="middle">IX</text>
+          </g>
+          <line x1="100" y1="100" x2="100" y2="82" stroke="#0b0a08" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="100" y1="100" x2="114" y2="92" stroke="#0b0a08" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="100" y1="100" x2="100" y2="112" stroke="#6b1f1a" stroke-width="0.8" stroke-linecap="round"/>
+          <circle cx="100" cy="100" r="2" fill="#0b0a08"/>
+          <!-- Crown -->
+          <rect x="138" y="97" width="7" height="6" fill="url(#g3)"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Classique 1923</div>
+          <div class="product-cat">Mechanical · Steel</div>
+        </div>
+        <div class="product-price">€12,400</div>
+      </div>
+    </div>
+
+    <!-- Product 4: Spectacles -->
+    <div class="product reveal" data-cat="spec limited">
+      <div class="product-frame">
+        <span class="product-tag">Atelier Series</span>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g4" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#e6c889"/>
+              <stop offset="100%" stop-color="#8c7341"/>
+            </linearGradient>
+          </defs>
+          <line x1="78" y1="100" x2="122" y2="100" stroke="url(#g4)" stroke-width="3"/>
+          <circle cx="56" cy="100" r="34" fill="none" stroke="url(#g4)" stroke-width="3"/>
+          <circle cx="144" cy="100" r="34" fill="none" stroke="url(#g4)" stroke-width="3"/>
+          <circle cx="56" cy="100" r="32" fill="#a89578" opacity="0.55"/>
+          <circle cx="144" cy="100" r="32" fill="#a89578" opacity="0.55"/>
+          <ellipse cx="50" cy="92" rx="10" ry="5" fill="#faf6ee" opacity="0.6"/>
+          <ellipse cx="138" cy="92" rx="10" ry="5" fill="#faf6ee" opacity="0.6"/>
+          <path d="M 22 100 Q 8 94, 4 110" stroke="url(#g4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M 178 100 Q 192 94, 196 110" stroke="url(#g4)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">L'Aviateur Or</div>
+          <div class="product-cat">14kt Gold · Sun</div>
+        </div>
+        <div class="product-price">€1,840</div>
+      </div>
+    </div>
+
+    <!-- Product 5: Wristwatch -->
+    <div class="product reveal" data-cat="watch">
+      <div class="product-frame">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g5" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#1a1815"/>
+              <stop offset="100%" stop-color="#0b0a08"/>
+            </linearGradient>
+            <linearGradient id="s5" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#1a1310"/>
+              <stop offset="100%" stop-color="#2a1d18"/>
+            </linearGradient>
+          </defs>
+          <!-- Top leather strap -->
+          <path d="M 76 18 L 80 70 L 120 70 L 124 18 Z" fill="url(#s5)"/>
+          <line x1="84" y1="26" x2="86" y2="66" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.5"/>
+          <line x1="116" y1="26" x2="114" y2="66" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.5"/>
+          <!-- Bottom leather strap with buckle -->
+          <path d="M 80 130 L 76 182 L 124 182 L 120 130 Z" fill="url(#s5)"/>
+          <line x1="86" y1="134" x2="84" y2="174" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.5"/>
+          <line x1="114" y1="134" x2="116" y2="174" stroke="#c9a96b" stroke-width="0.4" stroke-dasharray="2,2" opacity="0.5"/>
+          <rect x="86" y="176" width="28" height="10" rx="1" fill="#c9a96b"/>
+          <!-- Square case -->
+          <rect x="64" y="64" width="72" height="72" rx="8" fill="url(#g5)"/>
+          <rect x="70" y="70" width="60" height="60" rx="4" fill="#6b1f1a"/>
+          <rect x="70" y="70" width="60" height="60" rx="4" fill="none" stroke="#c9a96b" stroke-width="0.4"/>
+          <text x="100" y="92" text-anchor="middle" fill="#c9a96b" font-family="Roboto" font-size="7" letter-spacing="1.5">ORLOV</text>
+          <line x1="100" y1="108" x2="100" y2="88" stroke="#c9a96b" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="100" y1="108" x2="114" y2="100" stroke="#c9a96b" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="100" cy="108" r="2" fill="#c9a96b"/>
+          <text x="100" y="124" text-anchor="middle" fill="#c9a96b" font-family="Roboto" font-size="4" letter-spacing="2" opacity="0.7">CARRÉ</text>
+          <!-- Crown -->
+          <rect x="136" y="96" width="6" height="8" fill="url(#g5)"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Carré Bordeaux</div>
+          <div class="product-cat">Square Case · Leather</div>
+        </div>
+        <div class="product-price">€8,950</div>
+      </div>
+    </div>
+
+    <!-- Product 6: Spectacles -->
+    <div class="product reveal" data-cat="spec">
+      <div class="product-frame">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <line x1="76" y1="100" x2="124" y2="100" stroke="#6b1f1a" stroke-width="3"/>
+          <path d="M 22 90 L 22 110 Q 22 124, 36 124 L 70 124 Q 84 124, 84 110 L 84 90 Q 84 76, 70 76 L 36 76 Q 22 76, 22 90 Z" fill="#6b1f1a" stroke="#0b0a08" stroke-width="0.5"/>
+          <path d="M 116 90 L 116 110 Q 116 124, 130 124 L 164 124 Q 178 124, 178 110 L 178 90 Q 178 76, 164 76 L 130 76 Q 116 76, 116 90 Z" fill="#6b1f1a" stroke="#0b0a08" stroke-width="0.5"/>
+          <rect x="28" y="82" width="50" height="36" rx="2" fill="#d4cdb8" opacity="0.6"/>
+          <rect x="122" y="82" width="50" height="36" rx="2" fill="#d4cdb8" opacity="0.6"/>
+          <line x1="22" y1="100" x2="6" y2="94" stroke="#6b1f1a" stroke-width="3" stroke-linecap="round"/>
+          <line x1="178" y1="100" x2="194" y2="94" stroke="#6b1f1a" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Madame Rouge</div>
+          <div class="product-cat">Acetate · Optical</div>
+        </div>
+        <div class="product-price">€520</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CRAFT ============ -->
+<section class="craft" id="craft">
+  <div class="craft-grid">
+    <div class="craft-visual reveal">
+      <div class="ring"></div>
+      <div class="ring inner"></div>
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cog" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#e6c889"/>
+            <stop offset="100%" stop-color="#8c7341"/>
+          </linearGradient>
+        </defs>
+        <!-- Movement diagram -->
+        <circle cx="150" cy="150" r="110" fill="none" stroke="#c9a96b" stroke-width="0.5" opacity="0.4"/>
+        <g transform="translate(150, 150)">
+          <!-- Mainspring barrel -->
+          <circle r="48" fill="none" stroke="url(#cog)" stroke-width="1.5"/>
+          <circle r="42" fill="none" stroke="url(#cog)" stroke-width="0.5" opacity="0.5"/>
+          <!-- Gear teeth -->
+          <g stroke="url(#cog)" stroke-width="1.5" fill="none">
+            <line x1="0" y1="-48" x2="0" y2="-54"/>
+            <line x1="34" y1="-34" x2="38" y2="-38"/>
+            <line x1="48" y1="0" x2="54" y2="0"/>
+            <line x1="34" y1="34" x2="38" y2="38"/>
+            <line x1="0" y1="48" x2="0" y2="54"/>
+            <line x1="-34" y1="34" x2="-38" y2="38"/>
+            <line x1="-48" y1="0" x2="-54" y2="0"/>
+            <line x1="-34" y1="-34" x2="-38" y2="-38"/>
+          </g>
+          <!-- Inner -->
+          <circle r="22" fill="none" stroke="url(#cog)" stroke-width="1"/>
+          <circle r="4" fill="url(#cog)"/>
+          <!-- Side gears -->
+          <circle cx="80" cy="-40" r="22" fill="none" stroke="url(#cog)" stroke-width="1"/>
+          <circle cx="80" cy="-40" r="3" fill="url(#cog)"/>
+          <circle cx="-80" cy="50" r="18" fill="none" stroke="url(#cog)" stroke-width="1"/>
+          <circle cx="-80" cy="50" r="3" fill="url(#cog)"/>
+          <!-- Jewels -->
+          <circle cx="60" cy="60" r="3" fill="#6b1f1a"/>
+          <circle cx="-60" cy="-60" r="3" fill="#6b1f1a"/>
+          <circle cx="0" cy="80" r="3" fill="#6b1f1a"/>
+        </g>
+      </svg>
+    </div>
+    <div class="craft-text reveal">
+      <div class="eyebrow">Chapter II</div>
+      <h2 class="section-title" style="margin-top:24px; margin-bottom:48px;">The <em>atelier</em></h2>
+      <p>Every Maison Orlov piece begins in our Geneva workshop, where master horologists assemble movements by hand under loupes — the same gestures perfected over four generations.</p>
+      <p>Our eyewear is shaped from seven-month-cured Italian acetate, polished against linen and finished with hand-set rivets. No piece leaves the bench until it has passed seventy-three inspections.</p>
+      <ul class="craft-features">
+        <li><span class="ix">I.</span><span class="ft">Hand-finished movements</span><span class="ds">Geneva</span></li>
+        <li><span class="ix">II.</span><span class="ft">Mazzucchelli acetate</span><span class="ds">Italy</span></li>
+        <li><span class="ix">III.</span><span class="ft">Sapphire crystal & domed lenses</span><span class="ds">Optical-grade</span></li>
+        <li><span class="ix">IV.</span><span class="ft">Lifetime servicing</span><span class="ds">Complimentary</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDITORIAL / HERITAGE ============ -->
+<section class="editorial" id="story">
+  <div class="section-head reveal">
+    <div class="eyebrow">Chapter III</div>
+    <h2 class="section-title">A <em>century</em> of seeing & keeping time</h2>
+  </div>
+  <div class="editorial-grid">
+    <div class="editorial-img reveal">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(150, 150)" stroke="#0b0a08" stroke-width="1" fill="none">
+          <!-- Architectural arch motif -->
+          <path d="M -100 80 L -100 -20 Q -100 -100, 0 -100 Q 100 -100, 100 -20 L 100 80" stroke-width="1.5"/>
+          <path d="M -70 80 L -70 -10 Q -70 -70, 0 -70 Q 70 -70, 70 -10 L 70 80" stroke-width="0.5" opacity="0.5"/>
+          <line x1="-110" y1="80" x2="110" y2="80" stroke-width="2"/>
+          <line x1="-115" y1="86" x2="115" y2="86"/>
+          <!-- Compass -->
+          <circle r="6" fill="#c9a96b" stroke="none"/>
+          <text x="0" y="48" text-anchor="middle" font-family="Roboto" font-size="14" fill="#0b0a08">MCMXXIII</text>
+        </g>
+      </svg>
+    </div>
+    <div class="editorial-text reveal">
+      <p class="quote">Mikhail Orlov believed time was the only true luxury — and that to measure it well was a form of devotion.</p>
+      <p class="attribution">— From the founder's journals, 1924</p>
+      <p>What began in a single Geneva atelier in 1923 has become a quiet authority in horology and optical craft. Three generations later, every Orlov timepiece is still regulated by hand, every spectacle frame still cut, polished and fitted by named artisans.</p>
+      <p>We make few pieces. We make them slowly. And we make them to outlive us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATELIER / CONTACT ============ -->
+<section class="atelier" id="contact">
+  <div class="reveal" style="text-align:center;">
+    <div class="eyebrow" style="justify-content:center;">Chapter IV</div>
+    <h2 class="section-title" style="margin-top:24px;">Request a <em>private viewing</em></h2>
+  </div>
+
+  <form class="atelier-form reveal" id="atelierForm">
+    <div class="input-group">
+      <label>Your name</label>
+      <input type="text" name="name" required>
+    </div>
+    <div class="input-group">
+      <label>Correspondence</label>
+      <input type="email" name="email" required>
+    </div>
+    <div class="input-group">
+      <label>Piece of interest</label>
+      <input type="text" name="piece" placeholder="Sovereign Tourbillon, L'Aviateur Or…">
+    </div>
+    <div class="input-group">
+      <label>Message</label>
+      <textarea name="message" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn">Submit Request</button>
+  </form>
+
+  <div class="locations reveal">
+    <div class="location">
+      <h4>Geneva</h4>
+      <p>Rue du Rhône 42<br>1204 Geneva, Switzerland</p>
+      <p class="hrs">Tue – Sat · 10h – 19h</p>
+    </div>
+    <div class="location">
+      <h4>Paris</h4>
+      <p>14 Place Vendôme<br>75001 Paris, France</p>
+      <p class="hrs">Tue – Sat · 10h – 19h</p>
+    </div>
+    <div class="location">
+      <h4>Milan</h4>
+      <p>Via Montenapoleone 8<br>20121 Milano, Italia</p>
+      <p class="hrs">Tue – Sat · 10h – 19h</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="brand">MAISON ORLOV<span class="est">EST. MCMXXIII</span></div>
+      <p>Hand-finished timepieces and bespoke eyewear from our European ateliers — a quiet authority in horology and optical craft since 1923.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Maison</h5>
+      <ul>
+        <li><a href="#story">Heritage</a></li>
+        <li><a href="#craft">Atelier</a></li>
+        <li><a href="#">Craftsmen</a></li>
+        <li><a href="#">Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Collections</h5>
+      <ul>
+        <li><a href="#">Horology</a></li>
+        <li><a href="#">Eyewear</a></li>
+        <li><a href="#">Bespoke</a></li>
+        <li><a href="#">Archive</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#">Servicing</a></li>
+        <li><a href="#">Repairs</a></li>
+        <li><a href="#">Authentication</a></li>
+        <li><a href="#contact">Private Viewing</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© MMXXVI Maison Orlov · All rights reserved</div>
+    <div>Geneva · Paris · Milan</div>
+  </div>
+</footer>
+
+<script>
+  // ============ NAV SCROLL ============
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // ============ COLLECTION FILTERS ============
+  const tabs = document.querySelectorAll('.tab');
+  const products = document.querySelectorAll('.product');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      products.forEach(p => {
+        const cats = p.dataset.cat.split(' ');
+        const show = filter === 'all' || cats.includes(filter);
+        p.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  // ============ SCROLL REVEAL ============
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ============ FORM ============
+  const form = document.getElementById('atelierForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    btn.textContent = 'Thank you · We will be in touch';
+    btn.style.background = 'var(--gilt)';
+    btn.style.borderColor = 'var(--gilt)';
+    btn.style.color = 'var(--ink)';
+    setTimeout(() => form.reset(), 100);
+  });
+
+  // ============ PRODUCT CLICK (placeholder) ============
+  products.forEach(p => {
+    p.addEventListener('click', () => {
+      const name = p.querySelector('.product-name').textContent;
+      const cart = document.querySelector('.nav-cart span');
+      cart.textContent = parseInt(cart.textContent) + 1;
+      // subtle feedback
+      cart.animate([
+        { transform: 'scale(1)', background: 'transparent' },
+        { transform: 'scale(1.4)', background: 'var(--gilt)', color: 'var(--ink)' },
+        { transform: 'scale(1)', background: 'transparent' }
+      ], { duration: 600, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+    });
+  });
+</script>
+
+</body>
+</html>
